@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Matrix Chain Multiplication – DP Algorithm</title>
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism-okaidia.css" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;color:#192132}
+.card{background:#fff;border-radius:16px;box-shadow:0 12px 25px rgba(0,0,0,.15);max-width:860px;width:100%;padding:2rem 2.5rem;position:relative;overflow:hidden;animation:pop .7s ease both}
+@keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+h2{font-size:2rem;font-weight:600;margin-bottom:1rem;position:relative;color:#3b3f58}
+h2::before{content:"";position:absolute;left:0;bottom:-6px;width:60px;height:4px;background:#7c3aed;border-radius:2px;animation:slide 1s ease forwards .3s;transform-origin:left}
+@keyframes slide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+pre{background:#2d2d2d;border-left:4px solid #7c3aed;border-radius:8px;padding:1rem 1.5rem;margin-top:1rem;overflow:auto;font-size:1rem;line-height:1.55rem;color:#f8f8f2}
+pre code{display:block;font-family:'Fira Code',monospace;background:transparent}
+.back{position:absolute;top:1rem;right:1rem;text-decoration:none;font-size:.9rem;color:#7c3aed;font-weight:500}
+.back:hover{text-decoration:underline}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/components/prism-javascript.min.js"></script>
+</head>
+<body>
+  <div class="card">
+    <a href="ASS_2.html" class="back">← Back to syllabus</a><br />
+    <h2>Matrix Chain Multiplication – Bottom‑Up DP</h2>
+    <p>Computes the minimum scalar multiplications to multiply <em>n</em> matrices using the classic <strong>MATRIX‑CHAIN‑ORDER</strong> algorithm.</p>
+<pre><code class="language-javascript">MATRIX-CHAIN-ORDER(p, n):            // p[0..n] dims, n matrices
+    for i ← 1 to n:
+        m[i][i] ← 0                  // cost of single matrix
+
+    for len ← 2 to n:                // sub‑chain length
+        for i ← 1 to n - len + 1:
+            j ← i + len - 1
+            m[i][j] ← ∞
+            for k ← i to j - 1:      // split point
+                cost ← m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j]
+                if cost < m[i][j]:
+                    m[i][j] ← cost   // best cost for (i..j)
+                    s[i][j] ← k      // record split
+
+    return m[1][n], s                // optimal cost & split table</code></pre>
+    <p style="margin-top:1rem">Time&nbsp;<strong>Θ(n³)</strong>, space&nbsp;Θ(n²). Use table <code>s</code> to print the optimal parenthesisation.</p>
+  </div>
+</body>
+</html>

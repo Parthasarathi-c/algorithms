@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travelling Salesman – Branch &amp; Bound</title>
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism-okaidia.css" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;color:#192132}
+.card{background:#fff;border-radius:16px;box-shadow:0 12px 25px rgba(0,0,0,.15);max-width:860px;width:100%;padding:2rem 2.5rem;position:relative;overflow:hidden;animation:pop .7s ease both}
+@keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+h2{font-size:2rem;font-weight:600;margin-bottom:1rem;position:relative;color:#3b3f58}
+h2::before{content:"";position:absolute;left:0;bottom:-6px;width:60px;height:4px;background:#7c3aed;border-radius:2px;animation:slide 1s ease forwards .3s;transform-origin:left}
+@keyframes slide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+pre{background:#2d2d2d;border-left:4px solid #7c3aed;border-radius:8px;padding:1rem 1.5rem;margin-top:1rem;overflow:auto;font-size:1rem;line-height:1.55rem;color:#f8f8f2}
+pre code{display:block;font-family:'Fira Code',monospace;background:transparent}
+.back{position:absolute;top:1rem;right:1rem;text-decoration:none;font-size:.9rem;color:#7c3aed;font-weight:500}
+.back:hover{text-decoration:underline}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/components/prism-javascript.min.js"></script>
+</head>
+<body>
+  <div class="card">
+    <a href="ASS_2.html" class="back">← Back to syllabus</a><br/>
+    <h2>Travelling Salesman – Branch &amp; Bound (B&amp;B)</h2>
+    <p>This pseudocode explores tours depth‑first while pruning any partial path whose optimistic lower‑bound exceeds the best complete tour cost found so far.</p>
+
+<pre><code class="language-javascript">global bestCost ← ∞
+global bestTour ← []
+
+procedure TSP_BB(path, cost, unused):
+    if unused = ∅ then                                 // full tour
+        total ← cost + dist(path.last, path[0])        // close the cycle
+        if total &lt; bestCost then
+            bestCost ← total
+            bestTour ← path
+        return
+
+    bound ← cost + MIN_EDGE_OUT(path.last)             // simple LB
+    bound ← bound + SUM_MIN_OUT(unused)                // + optimistic edges
+    if bound ≥ bestCost then return                    // prune branch
+
+    for city in ORDER_BY_NEAREST(path.last, unused):   // heuristic order
+        TSP_BB(path + city,
+               cost + dist(path.last, city),
+               unused \ {city})
+</code></pre>
+
+<p style="margin-top:1rem"><strong>Key points</strong>: <br>• <code>MIN_EDGE_OUT(v)</code> is the cheapest outgoing edge from city <em>v</em>.<br>• <code>SUM_MIN_OUT(unused)</code> adds each unused city's two smallest incident edges (1‑tree bound).<br>• Ordering children by nearest neighbour usually leads to early good tours ⇢ tighter pruning.</p>
+  </div>
+</body>
+</html>

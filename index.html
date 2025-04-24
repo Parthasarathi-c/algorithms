@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithm Syllabus Showcase</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:#f0f4ff; /* soft pastel canvas */
+      color:#1d243d;
+      min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      padding:2rem;
+      overflow-x:hidden;
+    }
+    .container{width:100%;max-width:960px}
+    h1{
+      text-align:center;margin-bottom:2rem;font-weight:600;font-size:2.6rem;letter-spacing:.5px;color:#3b3f58;
+      position:relative;overflow:hidden
+    }
+    h1::after{ /* subtle underline that slides in */
+      content:"";position:absolute;left:50%;bottom:-6px;width:0;height:4px;background:#7c3aed;border-radius:2px;
+      transform:translateX(-50%);
+      animation:underline 1s ease forwards .4s
+    }
+    @keyframes underline{to{width:120px}}
+
+    /* gradient palette for units */
+    :root{
+      --u2:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%);
+      --u3:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%);
+      --u4:linear-gradient(135deg,#fbc2eb 0%,#a6c1ee 100%);
+    }
+
+    .unit{border-radius:14px;margin-bottom:1.25rem;overflow:hidden;cursor:pointer;position:relative;transform-style:preserve-3d}
+    .unit::before{content:"";position:absolute;inset:0;z-index:-1;transition:transform .6s cubic-bezier(.25,.8,.25,1)}
+    .unit#unit2::before{background:var(--u2)}
+    .unit#unit3::before{background:var(--u3)}
+    .unit#unit4::before{background:var(--u4)}
+    .unit:hover::before{transform:scale(1.04) rotateX(8deg)}
+
+    .unit-header{padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+    .unit-title{font-size:1.35rem;font-weight:500}
+    .chevron{width:1.1rem;height:1.1rem;border-right:3px solid #fff;border-bottom:3px solid #fff;transform:rotate(45deg);transition:transform .35s ease}
+    .unit.open .chevron{transform:rotate(225deg)}
+
+    .topics{background:#ffffffee;color:#374151;max-height:0;padding:0 1.75rem;overflow:hidden;font-size:1.05rem;line-height:2.2rem;transition:max-height .6s ease,padding .6s ease}
+    .unit.open .topics{max-height:600px;padding:0 1.75rem 1.25rem}
+    ul{list-style:inside square}
+
+    /* slide fade animation when opening */
+    .topics > *{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease}
+    .unit.open .topics > *{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Algorithm Design & Analysis – Syllabus</h1>
+
+    <div class="unit" id="unit2">
+      <div class="unit-header">
+        <span class="unit-title">UNIT II – Selection Algorithms</span>
+        <span class="chevron"></span>
+      </div>
+      <div class="topics">
+        <ul>
+          <li><a href="quick.html" class="algo-link">Selection in Expected Linear Time</a></li>
+          <li>Selection in Worst‑Case Linear Time</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="unit" id="unit3">
+      <div class="unit-header">
+        <span class="unit-title">UNIT III – Dynamic Programming & Greedy</span>
+        <span class="chevron"></span>
+      </div>
+      <div class="topics">
+        <strong>Elements of Dynamic Programming</strong>
+        <ul>
+          <li><a href="rod_cut.html" class="algo-link">Rod Cutting</a></li>
+          <li><a href="mat_chain.html" class="algo-link">Matrix Chain Multiplication</a></li>
+          <li><a href="lcs.html" class="algo-link">Longest Common Subsequence</a></li>
+        </ul>
+        <strong>Elements of Greedy Strategy</strong>
+        <ul>
+          <li>Huffman Coding</li>
+          <li>Single‑Source Shortest Path</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="unit" id="unit4">
+      <div class="unit-header">
+        <span class="unit-title">UNIT IV – Backtracking, Branch & Bound, String Matching</span>
+        <span class="chevron"></span>
+      </div>
+      <div class="topics">
+        <strong>Backtracking</strong>
+        <ul><li><a href="nqueens.html" class="algo-link">N-Queens</a></li></ul>
+        <strong>Branch &amp; Bound</strong>
+        <ul><li><a href="travel.html" class="algo-link">Travelling Salesperson</a></li></ul>
+        <strong>String Matching</strong>
+        <ul><li><a href="naive.html" class="algo-link">Naïve Algorithm</a></li></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.unit').forEach(unit=>{
+      unit.querySelector('.unit-header').addEventListener('click',()=>unit.classList.toggle('open'));
+    });
+  </script>
+</body>
+</html>

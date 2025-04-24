@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quickselect – Expected Linear Time Selection</title>
+
+<!-- Include PrismJS CSS for Syntax Highlighting -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism-okaidia.css" rel="stylesheet" />
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Poppins',sans-serif;
+    background:#a1c4fd; /* soft gradient backdrop */
+    background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%);
+    display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;
+    color:#192132;
+  }
+  .card{
+    background:#fff;border-radius:16px;box-shadow:0 12px 25px rgba(0,0,0,.15);
+    max-width:800px;width:100%;padding:2rem 2.5rem;position:relative;overflow:hidden;
+    animation:pop 0.7s ease both;
+  }
+  @keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+
+  h2{font-size:2rem;font-weight:600;margin-bottom:1rem;position:relative;color:#3b3f58}
+  h2::before{
+    content:"";position:absolute;left:0;bottom:-6px;width:60px;height:4px;background:#7c3aed;border-radius:2px;
+    animation:slide 1s ease forwards .3s;transform-origin:left
+  }
+  @keyframes slide{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  pre{background:#2d2d2d;border-left:4px solid #7c3aed;border-radius:8px;padding:1rem 1.5rem;margin-top:1rem;overflow:auto;font-size:1rem;line-height:1.55rem;color:#f8f8f2;}
+  pre code{
+    display:block;
+    color: #f8f8f2;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    background: transparent;
+    padding: 0;
+  }
+  .back{
+    position:absolute;top:1rem;right:1rem;text-decoration:none;font-size:.9rem;color:#7c3aed;font-weight:500;
+  }
+  .back:hover{text-decoration:underline}
+</style>
+
+<!-- Include PrismJS JS for Syntax Highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/components/prism-javascript.min.js"></script>
+
+</head>
+<body>
+  <div class="card">
+    <a href="ASS_2.html" class="back">← Back to syllabus</a><br />
+    <h2>Quickselect – Selection in Expected&nbsp;O(n) Time</h2>
+    <p>This pseudocode outlines the randomized Quickselect algorithm used to find the <em>k‑th</em> smallest element in expected linear time.</p>
+    
+    <!-- Applying syntax highlighting to the code block -->
+    <pre><code class="language-javascript">selection(A, low, high, k):
+    if low == high: return A[low]               // only one item
+
+    q = partition(A, low, high)                // Hoare/Lomuto split
+    x = q - low + 1                            // rank of pivot in this slice
+
+    if q == k:               return A[q]       // pivot <em>is</em> the answer
+    else if q &gt; k:           return selection(A, low, q‑1, k)      // left side
+    else                     return selection(A, q+1, high, k‑x)   // right side</code></pre>
+
+    <p style="margin-top:1rem">Here, <code>partition</code> reorders the slice so that all elements &lt; pivot come before index <code>q</code>, and those &gt; pivot come after. Only the relevant side is recursed into, yielding an average recurrence of <code>T(n) = T(n/2) + Θ(n)</code> ⇒ <strong>expected Θ(n)</strong>.</p>
+  </div>
+</body>
+</html>
